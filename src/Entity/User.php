@@ -2,13 +2,24 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ApiResource(
+ *  normalizationContext={
+ *      "groups"={"users_read"}
+ *  }
+ * )
+ * @UniqueEntity("email", message="Un utilisateur avec cet email existe déjà !")
  */
 class User implements UserInterface
 {
@@ -16,37 +27,48 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"customers_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"users_read", "customers_read", "invoices_read"})
+     * @Assert\NotBlank(message="Le champ email ne peut être vide !")
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"users_read", "invoices_read"})
+     * @Assert\NotBlank(message="Le champ role ne peut être vide !")
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Le champ mot de passe ne peut être vide !")
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"users_read", "customers_read", "invoices_read"})
+     * @Assert\NotBlank(message="Le champ prenom ne peut être vide !")
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"users_read", "customers_read", "invoices_read"})
+     * @Assert\NotBlank(message="Le champ nom ne peut être vide !")
      */
     private $lastName;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Customer", mappedBy="user")
+     * @Assert\NotBlank(message="Le champ client ne peut être vide !")
      */
     private $customers;
 

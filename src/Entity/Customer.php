@@ -2,12 +2,22 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
+ * @ApiResource(
+ *  collectionOperations={"GET", "POST"},
+ *  itemOperations={"GET", "PUT", "DELETE"},
+ *  normalizationContext={
+ *      "groups"={"customers_read"}
+ *  }
+ * )
  */
 class Customer
 {
@@ -15,36 +25,51 @@ class Customer
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"customers_read", "invoices_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"customers_read", "invoices_read"})
+     * @Assert\NotBlank(message="Le champ prenom ne peut être vide !")
+     * @Assert\Length(min=3, minMessage="Le prenom doit faire entre 3 et 250 caractéres !", max=255, maxMessage="Le prenom ne peut exceder 255 caracteres !")
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"customers_read", "invoices_read"})
+     * @Assert\NotBlank(message="Le champ nom ne peut être vide !")
+     * @Assert\Length(min=3, minMessage="Le nom doit faire entre 3 et 250 caractéres !", max=255, maxMessage="Le nom ne peut exceder 255 caracteres !")
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"customers_read", "invoices_read"})
+     * @Assert\NotBlank
+     * @Assert\Email(message = "Veuillez saisir un email valide !")
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"customers_read"})
      */
     private $company;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Invoice", mappedBy="customer")
+     * @Groups({"customers_read"})
      */
     private $invoices;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="customers")
+     * @Groups({"customers_read", "invoices_read"})
+     * @Assert\NotBlank(message="L'utilisateur est obligation !")
+     * @Assert\Length(min=3, minMessage="Le nom de l'utilisateur doit faire minimum 3 caractéres !", max=255, maxMessage="maximum 255 caractéres !")
      */
     private $user;
 
