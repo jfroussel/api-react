@@ -12,6 +12,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class CustomerUserSubscriber implements EventSubscriberInterface {
 
+    /** @var Security */
     private $security;
 
     public function __construct(Security $security) {
@@ -27,7 +28,7 @@ class CustomerUserSubscriber implements EventSubscriberInterface {
     public function setUserForCustomer(ViewEvent $event) {
         $customer = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
-
+       
         if($customer instanceof Customer && $method === 'POST') {
             $user = $this->security->getUser();
             $customer->setUser($user);

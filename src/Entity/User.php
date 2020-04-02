@@ -16,7 +16,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ApiResource(
  *  normalizationContext={
- *      "groups"={"users_read"}
+ *      "groups"={"customers_read"}
  *  }
  * )
  * @UniqueEntity("email", message="Un utilisateur avec cet email existe déjà !")
@@ -27,20 +27,20 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"customers_read"})
+     * @Groups({"customers_read", "invoices_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"users_read", "customers_read", "invoices_read"})
+     * @Groups({"customers_read", "invoices_read"})
      * @Assert\NotBlank(message="Le champ email ne peut être vide !")
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"users_read", "invoices_read"})
+     * @Groups({"invoices_read"})
      * @Assert\NotBlank(message="Le champ role ne peut être vide !")
      */
     private $roles = [];
@@ -54,14 +54,14 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"users_read", "customers_read", "invoices_read"})
+     * @Groups({"customers_read", "invoices_read"})
      * @Assert\NotBlank(message="Le champ prenom ne peut être vide !")
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"users_read", "customers_read", "invoices_read"})
+     * @Groups({"customers_read", "invoices_read"})
      * @Assert\NotBlank(message="Le champ nom ne peut être vide !")
      */
     private $lastName;

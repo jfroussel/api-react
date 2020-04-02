@@ -68,8 +68,7 @@ class Customer
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="customers")
      * @Groups({"customers_read", "invoices_read"})
-     * @Assert\NotBlank(message="L'utilisateur est obligation !")
-     * @Assert\Length(min=3, minMessage="Le nom de l'utilisateur doit faire minimum 3 caractéres !", max=255, maxMessage="maximum 255 caractéres !")
+     * @Assert\NotBlank(message="L'utilisateur est obligatoire !")
      */
     private $user;
 
