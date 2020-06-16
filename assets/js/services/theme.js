@@ -1,23 +1,27 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createMuiTheme } from "@material-ui/core/styles";
 
-export const COLOR_WHITE = "#ffffff"
-export const COLOR_PRIMARY= "#B7C63A"
+export const COLOR_WHITE = "#ffffff";
+export const COLOR_PRIMARY = "#B7C63A";
 const theme = createMuiTheme({
   palette: {
     primary: {
-      // light: will be calculated from palette.primary.main,
-      main: '#B7C63A',
-      // dark: will be calculated from palette.primary.main,
-      // contrastText: will be calculated to contrast with palette.primary.main
+      main: "#1976d2",
     },
     secondary: {
-      light: '#0066ff',
-      main: '#B62697',
-      // dark: will be calculated from palette.secondary.main,
-      contrastText: '#ffcc00',
+      main: "#ffffff",
     },
-    // Used by `getContrastText()` to maximize the contrast between
-    // the background and the text.
+    error: {
+      main: "#e57373",
+    },
+    warning: {
+      main: "#ffb74d",
+    },
+    info: {
+      main: "#64b5f6",
+    },
+    success: {
+      main: "#81c784",
+    },
     contrastThreshold: 3,
     // Used by the functions below to shift a color's luminance by approximately
     // two indexes within its tonal palette.
@@ -26,4 +30,4 @@ const theme = createMuiTheme({
   },
 });
 
-export default theme
+export default theme;

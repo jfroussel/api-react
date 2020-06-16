@@ -76,6 +76,16 @@ class Customer
     {
         $this->invoices = new ArrayCollection();
     }
+    /**
+     * Calcul du montant total des factures
+     * @Groups({"customers_read"})
+     * @return float
+     */
+    public function getTotalAmount() : float {
+        return array_reduce($this->invoices->toArray(), function($total, $invoice) {
+            return $total + $invoice->getAmount();
+        }, 0);
+    }
 
     public function getId(): ?int
     {

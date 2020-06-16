@@ -9,17 +9,16 @@
     "license": "UNLICENSED",
     "private": true,
     "scripts": {
-        "dev-server": "encore dev-server --port 9000",
+        "dev-server": "encore dev-server --port 8080",
+        "server": "php -S localhost:8000 -t public/ ",
         "dev": "encore dev",
         "watch": "encore dev --watch",
-        "build": "encore production --progress"
+        "build": "encore production --progress",
+        "prettier": "prettier --write 'assets/**/*.js'"
     },
     "dependencies": {
-        "@material-ui/core": "^4.9.8",
-        "@material-ui/icons": "^4.9.1",
         "axios": "^0.19.2",
-        "export-to-csv": "^0.2.1",
-        "material-table": "^1.57.2",
+        "prettier": "^2.0.2",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
         "react-router-dom": "^5.1.2"
